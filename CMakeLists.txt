@@ -85,6 +85,10 @@ add_library(kcudf
   kcudf/swriter.hh
   kcudf/kcudf.cpp
   kcudf/kcudf.hh
+  kcudf/reduce.cpp
+  kcudf/reduce.hh
+  kcudf/gwriter.cpp
+  kcudf/gwriter.hh
 )
 
 target_link_libraries(kcudf  ${Cudf_LIBRARIES} ${Support_LIBS})
