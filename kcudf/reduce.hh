@@ -227,7 +227,10 @@ public:
  * output the information to \a solved and \a problem. The return value indicates the
  * if the problem does not have solution, is already solved or has to be solved.
  *
- * \warning TODO: throw an exception for the files!
+ * \todo throw an exception for the files!
+ *
+ * \todo take streams instead of file names, that ill make the code
+ * more robust and lower the checks that need to be done.
  */
 KCudfReducer::RD_OUT reduce(const char* kcudf, const char* solved,
                             const char* problem, const char* paranoid = NULL);

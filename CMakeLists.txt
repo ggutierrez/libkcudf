@@ -103,4 +103,8 @@ if (BUILD_TOOLS)
   # Translator
   add_executable(cudf2kcudf tools/translator.cpp)
   target_link_libraries(cudf2kcudf kcudf ${Boost_LIBRARIES})
+
+  add_executable(kcudf-reduce tools/reducer.cpp)
+  target_link_libraries(kcudf-reduce kcudf ${Boost_LIBRARIES})
+
 endif()

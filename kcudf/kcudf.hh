@@ -292,7 +292,7 @@ private:
    * information in \a specv and in \a constv and append the packages
    * satisfying it to pkgs.
    */
-  void solveConstraint(const Vpkg& c, std::list<unsigned int>& pkgs) const;
+  void solveConstraint(const Vpkg& c, std::vector<unsigned int>& pkgs) const;
   /**
    * \brief Creates a disjunction package and stores it under string
    * \a s in \a constv.
@@ -341,9 +341,9 @@ private:
    */
   std::set<int> bigPackages_;
   /// List of installed concrete packages
-  std::list<int> crtPackages_;
+  std::vector<int> crtPackages_;
   /// List of _consistent_ installed concrete packages
-  mutable std::list<int> conPackages_;
+  mutable std::vector<int> conPackages_;
 public:
   /// Constructor from a cudf document
   KCudfData(const CudfDoc& doc, TranslatorStats& stats);
@@ -354,7 +354,7 @@ public:
   /// Return the set of installed big packages
   const std::set<int>& bigPackages(void) const;
   /// Return the list of installed concrete packages
-  const std::list<int>& crtPackages(void) const;
+  const std::vector<int>& crtPackages(void) const;
 };
 
 /// Output the information stored in \a kcudf
@@ -529,13 +529,13 @@ public:
    *
    * \a crt contains the installed concrete packages that were found
    */
-  void extraParanoid(std::list<int>& search) const;
+  void extraParanoid(std::vector<int>& search) const;
   /// Write paranoid information on stream \a os
   void writeParanoid(std::ostream& big) const;
   /// Return the set of installed big packages
   const std::set<int>& bigInstalled(void) const;
   /// Return the list of installed concrete packages
-  const std::list<int>& crtInstalled(void) const;
+  const std::vector<int>& crtInstalled(void) const;
 };
 
 /**
@@ -591,7 +591,7 @@ void readInfo(const char* info, KCudfInfoWriter& wrt);
  */
 void
 translate(const CudfDoc& doc, const char* kcudf, const char* info,
-          std::list<int>& bigInstalled, std::list<int>& crtInstalled,
+          std::vector<int>& bigInstalled, std::vector<int>& crtInstalled,
           const char* paranoid = NULL);
 
 /**

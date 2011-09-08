@@ -1098,7 +1098,7 @@ Disjunction* KCudfData::getDepDisjunction(const Vpkg& cs) {
     // it does not exist, create one
     Disjunction *p = newDisjunction(name);
     /// solve the constraint and add the providers to p
-    std::list<unsigned int> l; solveConstraint(cs,l);
+    std::vector<unsigned int> l; solveConstraint(cs,l);
     for (auto pi = l.begin(); pi != l.end(); ++pi) {
       p->addProvider(*pi);
     }
@@ -1128,7 +1128,7 @@ Disjunction* KCudfData::getDisjunction(const Vpkg& cs) {
     // it does not exist, create one
     Disjunction *p = newDisjunction(name);
     /// solve the constraint and add the providers to p
-    std::list<unsigned int> l; solveConstraint(cs,l);
+    std::vector<unsigned int> l; solveConstraint(cs,l);
     for (auto pi = l.begin(); pi != l.end(); ++pi) {
       p->addProvider(*pi);
     }
@@ -1138,7 +1138,7 @@ Disjunction* KCudfData::getDisjunction(const Vpkg& cs) {
   return static_cast<Disjunction*>(packages[d->second]);
 }
 
-void KCudfData::solveConstraint(const Vpkg& c, std::list<unsigned int>& pkgs) const {
+void KCudfData::solveConstraint(const Vpkg& c, std::vector<unsigned int>& pkgs) const {
   // here we have to solve the constraint c based on the information specv.
   if ( specv.count(c.getName()) > 0 ) {
     // there is an entry with the name in specv
@@ -1169,7 +1169,7 @@ KCudfData::bigPackages(void) const {
   return bigPackages_;
 }
 
-const std::list<int>&
+const std::vector<int>&
 KCudfData::crtPackages(void) const {
   //return crtPackages_;
 	return conPackages_;
@@ -1535,9 +1535,9 @@ void KCudfTranslator::translate(KCudfWriter& wrt, KCudfInfoWriter& inf, bool dbg
 }
 
 void KCudfTranslator::
-extraParanoid(std::list<int>& search) const {
+extraParanoid(std::vector<int>& search) const {
   
-  std::map<std::string,boost::tuple<bool,std::list<int> > > families;
+  std::map<std::string,boost::tuple<bool,std::vector<int> > > families;
   std::set<unsigned int> done;
   auto packages = data.getPackages();
   for (auto p = packages.begin(); p != packages.end(); ++p) {
@@ -1559,7 +1559,7 @@ extraParanoid(std::list<int>& search) const {
   for (auto f = families.begin(); f != families.end(); ++f) {
     if (f->second.get<0>()) {
       //std::cout << "Family: " << f->first << std::endl;
-      const std::list<int>& l = f->second.get<1>();
+      const std::vector<int>& l = f->second.get<1>();
       for (auto v = l.begin(); v != l.end(); ++v) {
         Package *rp = packages.at(*v);
         SelfPackage *pk = static_cast<SelfPackage*> (rp);
@@ -1582,13 +1582,13 @@ KCudfTranslator::bigInstalled(void) const {
   return data.bigPackages();
 }
 
-const std::list<int>&
+const std::vector<int>&
 KCudfTranslator::crtInstalled(void) const {
   return data.crtPackages();
 }
 
 void KCudfTranslator::writeParanoid(std::ostream& big) const {
-  std::list<int> search;
+  std::vector<int> search;
   extraParanoid(search);
   for(int i: search) {
     big << i << std::endl;
