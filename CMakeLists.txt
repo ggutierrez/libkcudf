@@ -91,11 +91,15 @@ add_library(kcudf
   kcudf/gwriter.hh
 )
 
-target_link_libraries(kcudf  ${Cudf_LIBRARIES} ${Support_LIBS})
+##########################################################################
+# Installation                                                           #
+##########################################################################
+target_link_libraries(kcudf  ${Cudf_LIBRARIES})
 install(TARGETS kcudf
   LIBRARY DESTINATION lib
   ARCHIVE DESTINATION lib)
-
+install(DIRECTORY kcudf/ DESTINATION include/kcudf
+  FILES_MATCHING PATTERN "*.hh")  
 ##########################################################################
 # Tools execuables creation
 ##########################################################################
@@ -107,4 +111,7 @@ if (BUILD_TOOLS)
   add_executable(kcudf-reduce tools/reducer.cpp)
   target_link_libraries(kcudf-reduce kcudf ${Boost_LIBRARIES})
 
+  # Tools insallation
+  install(TARGETS cudf2kcudf kcudf-reduce
+    RUNTIME DESTINATION bin)
 endif()

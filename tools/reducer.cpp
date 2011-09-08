@@ -129,8 +129,8 @@ int main(int argc, char **argv) {
   KCudfFileWriter sr(search);
 
   cerr << "*** Reducing: " << kcudf << endl
-      << "\tsolved:\t" << solved << endl
-      << "\tsearch:\t" << search << endl;
+       << "\tsolved:\t" << solved << endl
+       << "\tsearch:\t" << search << endl;
 
   KCudfReducer::RD_OUT rout = red->reduce(es,sr);
 
